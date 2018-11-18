@@ -9,10 +9,11 @@ namespace Tests
 {
     public class PointOfSaleTests
     {
+        private readonly DisplaySpy display = new DisplaySpy();
+
         [Fact]
         public void StartsWithGreeting()
         {
-            DisplaySpy display = new DisplaySpy();
             new PointOfSaleTerminal(display);
 
             display.Displayed.Should().Be("Welcome!");
@@ -21,7 +22,6 @@ namespace Tests
         [Fact]
         public void UnrecognizedBarCode()
         {
-            DisplaySpy display = new DisplaySpy();
             var pos = new PointOfSaleTerminal(display);
 
             pos.OnBarcode("bad");
