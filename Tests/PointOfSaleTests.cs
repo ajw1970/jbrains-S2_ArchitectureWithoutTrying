@@ -14,7 +14,7 @@ namespace Tests
         [Fact]
         public void StartsWithGreeting()
         {
-            new PointOfSaleTerminal(display);
+            new PointOfSaleTerminal(display, null);
 
             display.Displayed.Should().Be("Welcome!");
         }
@@ -22,11 +22,78 @@ namespace Tests
         [Fact]
         public void UnrecognizedBarCode()
         {
-            var pos = new PointOfSaleTerminal(display);
+            var pos = new PointOfSaleTerminal(display, new InMemoryGateway());
 
             pos.OnBarcode("bad");
 
             display.Displayed.Should().Be("Error");
+        }
+
+        [Fact]
+        public void RecognizedBarCode()
+        {
+            var gateway = new InMemoryGateway();
+            gateway.AddItem(new Item { Barcode = "good", Name = "Item Name", Price = 2.22 });
+            var pos = new PointOfSaleTerminal(display, gateway);
+
+            pos.OnBarcode("good");
+
+            display.Displayed.Should().Be("Item Name: $2.22");
+        }
+    }
+
+    public class Item
+    {
+        public string Barcode { get; set; }
+        public string Name { get; set; }
+        public double Price { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Name}: {Price:C}";
+        }
+
+        public class NullItem : Item
+        {
+            public NullItem()
+            {
+                Barcode = "";
+                Name = "";
+                Price = 0;
+            }
+
+            public override string ToString()
+            {
+                return "Error";
+            }
+        }
+    }
+
+    public interface IGateway
+    {
+        Item LookupItemByBarcode(string barcode);
+    }
+
+    public class InMemoryGateway : IGateway
+    {
+        private Item item;
+
+        public InMemoryGateway()
+        {
+            item = new Item.NullItem();
+        }
+
+        public Item LookupItemByBarcode(string barcode)
+        {
+            if (item.Barcode.Equals(barcode.TrimEnd()))
+                return item;
+            else
+                return new Item.NullItem();
+        }
+
+        public void AddItem(Item item)
+        {
+            this.item = item;
         }
     }
 
@@ -48,16 +115,19 @@ namespace Tests
     public class PointOfSaleTerminal
     {
         private readonly IDisplay display;
+        private readonly IGateway gateway;
 
-        public PointOfSaleTerminal(IDisplay display)
+        public PointOfSaleTerminal(IDisplay display, IGateway gateway)
         {
             this.display = display;
+            this.gateway = gateway;
             this.display.Show("Welcome!");
         }
 
-        public void OnBarcode(string bad)
+        public void OnBarcode(string barcode)
         {
-            display.Show("Error");
+            var item = gateway.LookupItemByBarcode(barcode);
+            display.Show(item.ToString());
         }
     }
 }
