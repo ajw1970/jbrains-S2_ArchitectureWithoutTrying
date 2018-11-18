@@ -13,7 +13,7 @@ namespace Tests
         public void StartsWithGreeting()
         {
             DisplaySpy display = new DisplaySpy();
-            var pos = new PointOfSaleTerminal(display);
+            new PointOfSaleTerminal(display);
 
             display.Displayed.Should().Be("Welcome!");
         }
