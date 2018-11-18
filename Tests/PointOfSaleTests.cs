@@ -17,16 +17,27 @@ namespace Tests
 
             display.Displayed.Should().Be("Welcome!");
         }
+
+        [Fact]
+        public void UnrecognizedBarCode()
+        {
+            DisplaySpy display = new DisplaySpy();
+            var pos = new PointOfSaleTerminal(display);
+
+            pos.OnBarcode("bad");
+
+            display.Displayed.Should().Be("Error");
+        }
     }
 
     public interface IDisplay
     {
-        void Display(string message);
+        void Show(string message);
     }
 
     public class DisplaySpy : IDisplay
     {
-        public void Display(string message)
+        public void Show(string message)
         {
             Displayed = message;
         }
@@ -36,9 +47,17 @@ namespace Tests
 
     public class PointOfSaleTerminal
     {
+        private readonly IDisplay display;
+
         public PointOfSaleTerminal(IDisplay display)
         {
-            display.Display("Welcome!");
+            this.display = display;
+            this.display.Show("Welcome!");
+        }
+
+        public void OnBarcode(string bad)
+        {
+            display.Show("Error");
         }
     }
 }
