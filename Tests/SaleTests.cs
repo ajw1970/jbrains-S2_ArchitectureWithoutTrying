@@ -10,16 +10,17 @@ namespace Tests
     public class SaleOneItemTests
     {
         private readonly Display display;
+        private readonly Dictionary<object, string> catalog;
 
         public SaleOneItemTests()
         {
             display = new Display();
+            catalog = new Dictionary<object,string>();
         }
 
         [Fact]
         public void ProjectFound()
         {
-            var catalog = new Dictionary<object,string>();
             var barcode1 = new object();
             catalog.Add(barcode1, "$7.25");
             var sale = new Sale(display, catalog);
