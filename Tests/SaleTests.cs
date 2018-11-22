@@ -20,6 +20,17 @@ namespace Tests
             display.Text.Should().Be("$7.25");
         }
 
+        [Fact]
+        public void NullBarcode()
+        {
+            var display = new Display();
+            var sale = new Sale(display);
+
+            sale.OnBarcode(null);
+
+            display.Text.Should().Be("Error: No Barcode");
+        }
+
     }
 
     public class Sale
@@ -33,7 +44,14 @@ namespace Tests
 
         public void OnBarcode(object barcode)
         {
-            display.Text = "$7.25";
+            if (barcode == null)
+            {
+                display.Text = "Error: No Barcode";
+            }
+            else
+            {
+                display.Text = "$7.25";
+            }
         }
     }
 
