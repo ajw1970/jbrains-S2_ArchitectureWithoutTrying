@@ -49,10 +49,12 @@ namespace Tests
     public class Sale
     {
         private readonly Display display;
+        private readonly Dictionary<object, string> catalog;
 
         public Sale(Display display, Dictionary<object, string> catalog)
         {
             this.display = display;
+            this.catalog = catalog;
         }
 
         public void OnBarcode(object barcode)
