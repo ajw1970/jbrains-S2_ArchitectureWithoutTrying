@@ -13,7 +13,8 @@ namespace Tests
         public void ProjectFound()
         {
             var display = new Display();
-            var sale = new Sale(display);
+            var catalog = new Dictionary<object,string>();
+            var sale = new Sale(display, catalog);
 
             sale.OnBarcode(new object());
 
@@ -24,20 +25,32 @@ namespace Tests
         public void NullBarcode()
         {
             var display = new Display();
-            var sale = new Sale(display);
+            var catalog = new Dictionary<object, string>();
+            var sale = new Sale(display, catalog);
 
             sale.OnBarcode(null);
 
             display.Text.Should().Be("Error: No Barcode");
         }
 
+        [Fact (Skip = "Need a catalog first")]
+        public void AnotherProductFound()
+        {
+            var display = new Display();
+            var catalog = new Dictionary<object, string>();
+            var sale = new Sale(display, catalog);
+
+            sale.OnBarcode(new object());
+
+            display.Text.Should().Be("$5.36");
+        }
     }
 
     public class Sale
     {
         private readonly Display display;
 
-        public Sale(Display display)
+        public Sale(Display display, Dictionary<object, string> catalog)
         {
             this.display = display;
         }
