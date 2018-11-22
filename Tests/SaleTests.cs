@@ -14,9 +14,11 @@ namespace Tests
         {
             var display = new Display();
             var catalog = new Dictionary<object,string>();
+            var barcode1 = new object();
+            catalog.Add(barcode1, "$7.25");
             var sale = new Sale(display, catalog);
 
-            sale.OnBarcode(new object());
+            sale.OnBarcode(barcode1);
 
             display.Text.Should().Be("$7.25");
         }
@@ -25,8 +27,7 @@ namespace Tests
         public void NullBarcode()
         {
             var display = new Display();
-            var catalog = new Dictionary<object, string>();
-            var sale = new Sale(display, catalog);
+            var sale = new Sale(display, null);
 
             sale.OnBarcode(null);
 
