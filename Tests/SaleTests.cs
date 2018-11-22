@@ -59,10 +59,5 @@ namespace Tests
     public class Display
     {
         public string Text { get; set; }
-
-        public void DisplayPriceForBarcode(object barcode)
-        {
-            Text = "$7.25";
-        }
     }
 }
