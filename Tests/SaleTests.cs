@@ -9,10 +9,16 @@ namespace Tests
 {
     public class SaleOneItemTests
     {
+        private readonly Display display;
+
+        public SaleOneItemTests()
+        {
+            display = new Display();
+        }
+
         [Fact]
         public void ProjectFound()
         {
-            var display = new Display();
             var catalog = new Dictionary<object,string>();
             var barcode1 = new object();
             catalog.Add(barcode1, "$7.25");
@@ -26,7 +32,6 @@ namespace Tests
         [Fact]
         public void NullBarcode()
         {
-            var display = new Display();
             var sale = new Sale(display, null);
 
             sale.OnBarcode(null);
@@ -37,7 +42,6 @@ namespace Tests
         [Fact (Skip = "Need a catalog first")]
         public void AnotherProductFound()
         {
-            var display = new Display();
             var catalog = new Dictionary<object, string>();
             var sale = new Sale(display, catalog);
 
