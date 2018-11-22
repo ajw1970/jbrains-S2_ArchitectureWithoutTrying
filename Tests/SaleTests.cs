@@ -64,9 +64,9 @@ namespace Tests
             {
                 display.Text = "Error: No Barcode";
             }
-            else
+            else if (catalog.ContainsKey(barcode))
             {
-                display.Text = "$7.25";
+                display.Text = catalog[barcode];
             }
         }
     }
