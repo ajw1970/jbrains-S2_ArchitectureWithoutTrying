@@ -51,6 +51,13 @@ namespace Tests
 
             display.Text.Should().Be("$5.36");
         }
+
+        [Fact]
+        public void ProductNotFound()
+        {
+            sale.OnBarcode(new object());
+            display.Text.Should().Be("Product Not Found");
+        }
     }
 
     public class Sale
@@ -73,6 +80,10 @@ namespace Tests
             else if (catalog.ContainsKey(barcode))
             {
                 display.Text = catalog[barcode];
+            }
+            else
+            {
+                display.Text = "Product Not Found";
             }
         }
     }
