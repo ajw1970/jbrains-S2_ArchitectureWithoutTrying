@@ -76,8 +76,10 @@ namespace Tests
             if (barcode == null)
             {
                 display.Text = "Error: No Barcode";
+                return;
             }
-            else if (catalog.ContainsKey(barcode))
+
+            if (catalog.ContainsKey(barcode))
             {
                 display.Text = catalog[barcode];
             }
