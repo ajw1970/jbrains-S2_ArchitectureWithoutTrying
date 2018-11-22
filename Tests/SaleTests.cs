@@ -34,20 +34,20 @@ namespace Tests
         [Fact]
         public void NullBarcode()
         {
-            var sale = new Sale(display, null);
-
             sale.OnBarcode(null);
 
             display.Text.Should().Be("Error: No Barcode");
         }
 
-        [Fact (Skip = "Need a catalog first")]
+        [Fact]
         public void AnotherProductFound()
         {
-            var catalog = new Dictionary<object, string>();
-            var sale = new Sale(display, catalog);
+            var barcode1 = new object();
+            catalog.Add(barcode1, "$7.25");
+            var barcode2 = new object();
+            catalog.Add(barcode2, "$5.36");
 
-            sale.OnBarcode(new object());
+            sale.OnBarcode(barcode2);
 
             display.Text.Should().Be("$5.36");
         }
