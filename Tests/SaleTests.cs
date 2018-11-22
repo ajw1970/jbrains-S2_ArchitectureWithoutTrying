@@ -11,11 +11,13 @@ namespace Tests
     {
         private readonly Display display;
         private readonly Dictionary<object, string> catalog;
+        private readonly Sale sale;
 
         public SaleOneItemTests()
         {
             display = new Display();
             catalog = new Dictionary<object,string>();
+            sale = new Sale(display, catalog);
         }
 
         [Fact]
@@ -23,7 +25,6 @@ namespace Tests
         {
             var barcode1 = new object();
             catalog.Add(barcode1, "$7.25");
-            var sale = new Sale(display, catalog);
 
             sale.OnBarcode(barcode1);
 
