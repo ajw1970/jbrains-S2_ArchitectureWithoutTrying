@@ -33,24 +33,23 @@ namespace Tests
         public void RecognizedBarCode()
         {
             var gateway = new InMemoryGateway();
-            gateway.AddItem(new Item { Barcode = "good", Name = "Item Name", Price = 2.22 });
+            gateway.AddItem(new Item { Barcode = "good", Price = 2.22 });
             var pos = new PointOfSaleTerminal(display, gateway);
 
             pos.OnBarcode("good");
 
-            display.Displayed.Should().Be("Item Name: $2.22");
+            display.Displayed.Should().Be("$2.22");
         }
     }
 
     public class Item
     {
         public string Barcode { get; set; }
-        public string Name { get; set; }
         public double Price { get; set; }
 
         public override string ToString()
         {
-            return $"{Name}: {Price:C}";
+            return $"{Price:C}";
         }
 
         public class NullItem : Item
@@ -58,7 +57,6 @@ namespace Tests
             public NullItem()
             {
                 Barcode = "";
-                Name = "";
                 Price = 0;
             }
 
