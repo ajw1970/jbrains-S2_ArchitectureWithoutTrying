@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Dynamic;
 using System.Linq;
 using System.Net.Mime;
 using System.Text;
@@ -53,7 +54,13 @@ namespace Tests
 
         public class Display
         {
-            public string GetText() => "$7.95";
+            public string GetText()
+            {
+                Text = "$7.95";
+                return Text;
+            } 
+            
+            public string Text { get; set; }
         }
     }
 }
