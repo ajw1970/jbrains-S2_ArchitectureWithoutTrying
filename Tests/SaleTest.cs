@@ -21,6 +21,17 @@ namespace Tests
             
             display.GetText().Should().Be("$7.95");
         }
+        
+        [Fact (Skip = "Refactoring...")]
+        public void AnotherProductFound()
+        {
+            var display = new Display();
+            var sale = new Sale();
+            
+            sale.OnBarcode(new Barcode("23456"));
+            
+            display.GetText().Should().Be("$12.50");
+        }
 
         public class Barcode
         {
