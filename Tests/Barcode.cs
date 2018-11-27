@@ -11,7 +11,7 @@
 
         protected bool Equals(Barcode other)
         {
-            return string.Equals(Value, other.Value);
+            return string.Equals(value, other.value);
         }
 
         public override bool Equals(object obj)
