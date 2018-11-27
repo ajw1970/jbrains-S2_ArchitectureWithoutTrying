@@ -24,7 +24,7 @@
 
         public override int GetHashCode()
         {
-            return Value.GetHashCode();
+            return value.GetHashCode();
         }
 
         public static bool operator ==(Barcode left, Barcode right)
