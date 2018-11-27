@@ -67,7 +67,7 @@ namespace Tests
 
             public void OnBarcode(Barcode barcode)
             {
-                if (barcode.Value == "")
+                if (barcode.Equals(new Barcode("")))
                 {
                     display.Text = "Scanning error: Empty barcode";
                 }
