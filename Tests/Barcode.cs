@@ -2,9 +2,11 @@
 {
     public class Barcode
     {
+        private readonly string value;
+
         public Barcode(string value)
         {
-            Value = value;
+            this.value = value;
         }
 
         protected bool Equals(Barcode other)
@@ -35,6 +37,11 @@
             return !Equals(left, right);
         }
 
-        public string Value { get; }
+        public string Value => value;
+
+        public override string ToString()
+        {
+            return value;
+        }
     }
 }
