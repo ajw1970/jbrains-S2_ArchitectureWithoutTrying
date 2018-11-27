@@ -75,7 +75,7 @@ namespace Tests
                 {
                     if (barcode == new Barcode("12345"))
                         display.Text = "$7.95";
-                    else if (barcode.Value == "23456")
+                    else if (barcode == new Barcode("23456"))
                         display.Text = "$12.50";
                     else
                         display.Text = "Product not found for " + barcode.Value;
