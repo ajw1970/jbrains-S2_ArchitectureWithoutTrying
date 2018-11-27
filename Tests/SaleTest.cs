@@ -60,7 +60,6 @@ namespace Tests
         {
             public string GetText()
             {
-                Text = "$7.95"; //At 15:31 in Sell One Item Part 1 video
                 return Text;
             } 
             
