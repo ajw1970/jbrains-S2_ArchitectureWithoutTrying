@@ -57,8 +57,8 @@ namespace Tests
             {
                 if (barcode.Value == "12345")
                     display.Text = "$7.95";
-                else
-                    display.Text = "$12.50";
+                else if (barcode.Value == "23456")
+                    display.Text = "$12.50"; 
             }
         }
 
