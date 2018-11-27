@@ -23,7 +23,7 @@ namespace Tests
             display.Text.Should().Be("$7.95");
         }
         
-        [Fact (Skip = "Refactoring...")]
+        [Fact]
         public void AnotherProductFound()
         {
             var display = new Display();
@@ -38,7 +38,10 @@ namespace Tests
         {
             public Barcode(string value)
             {
+                Value = value;
             }
+
+            public string Value { get; }
         }
 
         public class Sale
@@ -52,7 +55,10 @@ namespace Tests
 
             public void OnBarcode(Barcode barcode)
             {
-                display.Text = "$7.95";
+                if (barcode.Value == "12345")
+                    display.Text = "$7.95";
+                else
+                    display.Text = "$12.50";
             }
         }
 
