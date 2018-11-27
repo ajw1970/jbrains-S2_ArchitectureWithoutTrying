@@ -17,20 +17,20 @@ namespace Tests
         {
             var display = new Display();
             var sale = new Sale(display);
-            
+
             sale.OnBarcode(new Barcode("12345"));
-            
+
             display.Text.Should().Be("$7.95");
         }
-        
+
         [Fact]
         public void AnotherProductFound()
         {
             var display = new Display();
             var sale = new Sale(display);
-            
+
             sale.OnBarcode(new Barcode("23456"));
-            
+
             display.Text.Should().Be("$12.50");
         }
 
@@ -39,10 +39,21 @@ namespace Tests
         {
             Display display = new Display();
             var sale = new Sale(display);
-            
+
             sale.OnBarcode(new Barcode("99999"));
-            
+
             display.Text.Should().Be("Product not found for 99999");
+        }
+
+        [Fact]
+        public void EmptyBarcode()
+        {
+            Display display = new Display();
+            var sale = new Sale(display);
+
+            sale.OnBarcode(new Barcode(""));
+
+            display.Text.Should().Be("Scanning error: Empty barcode");
         }
 
         public class Barcode
@@ -66,17 +77,24 @@ namespace Tests
 
             public void OnBarcode(Barcode barcode)
             {
-                if (barcode.Value == "12345")
-                    display.Text = "$7.95";
-                else if (barcode.Value == "23456")
-                    display.Text = "$12.50";
+                if (barcode.Value == "")
+                {
+                    display.Text = "Scanning error: Empty barcode";
+                }
                 else
-                    display.Text = "Product not found for " + barcode.Value;
+                {
+                    if (barcode.Value == "12345")
+                        display.Text = "$7.95";
+                    else if (barcode.Value == "23456")
+                        display.Text = "$12.50";
+                    else
+                        display.Text = "Product not found for " + barcode.Value;
+                }
             }
         }
 
         public class Display
-        {           
+        {
             public string Text { get; set; }
         }
     }
