@@ -57,12 +57,7 @@ namespace Tests
         }
 
         public class Display
-        {
-            public string GetText()
-            {
-                return Text;
-            } 
-            
+        {           
             public string Text { get; set; }
         }
     }
