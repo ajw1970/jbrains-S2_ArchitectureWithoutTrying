@@ -16,7 +16,7 @@ namespace Tests
         public void ProductFound()
         {
             var display = new Display();
-            var sale = new Sale();
+            var sale = new Sale(display);
             
             sale.OnBarcode(new Barcode("12345"));
             
@@ -27,7 +27,7 @@ namespace Tests
         public void AnotherProductFound()
         {
             var display = new Display();
-            var sale = new Sale();
+            var sale = new Sale(display);
             
             sale.OnBarcode(new Barcode("23456"));
             
@@ -43,12 +43,16 @@ namespace Tests
 
         public class Sale
         {
-            public Sale()
+            private readonly Display display;
+
+            public Sale(Display display)
             {
+                this.display = display;
             }
 
             public void OnBarcode(Barcode barcode)
             {
+                display.Text = "$7.95";
             }
         }
 
@@ -56,7 +60,7 @@ namespace Tests
         {
             public string GetText()
             {
-                Text = "$7.95";
+                Text = "$7.95"; //At 15:31 in Sell One Item Part 1 video
                 return Text;
             } 
             
