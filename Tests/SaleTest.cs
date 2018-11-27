@@ -56,16 +56,6 @@ namespace Tests
             display.Text.Should().Be("Scanning error: Empty barcode");
         }
 
-        public class Barcode
-        {
-            public Barcode(string value)
-            {
-                Value = value;
-            }
-
-            public string Value { get; }
-        }
-
         public class Sale
         {
             private readonly Display display;

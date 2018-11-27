@@ -55,6 +55,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Barcode.cs" />
+    <Compile Include="BarcodeWholeValueTest.cs" />
     <Compile Include="SaleTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
