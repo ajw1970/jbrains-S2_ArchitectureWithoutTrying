@@ -20,7 +20,7 @@ namespace Tests
             
             sale.OnBarcode(new Barcode("12345"));
             
-            display.GetText().Should().Be("$7.95");
+            display.Text.Should().Be("$7.95");
         }
         
         [Fact (Skip = "Refactoring...")]
@@ -31,7 +31,7 @@ namespace Tests
             
             sale.OnBarcode(new Barcode("23456"));
             
-            display.GetText().Should().Be("$12.50");
+            display.Text.Should().Be("$12.50");
         }
 
         public class Barcode
