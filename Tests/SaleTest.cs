@@ -34,6 +34,17 @@ namespace Tests
             display.Text.Should().Be("$12.50");
         }
 
+        [Fact]
+        public void ProductNotFound()
+        {
+            Display display = new Display();
+            var sale = new Sale(display);
+            
+            sale.OnBarcode(new Barcode("99999"));
+            
+            display.Text.Should().Be("Product not found for 99999");
+        }
+
         public class Barcode
         {
             public Barcode(string value)
@@ -58,7 +69,9 @@ namespace Tests
                 if (barcode.Value == "12345")
                     display.Text = "$7.95";
                 else if (barcode.Value == "23456")
-                    display.Text = "$12.50"; 
+                    display.Text = "$12.50";
+                else
+                    display.Text = "Product not found for 99999";
             }
         }
 
