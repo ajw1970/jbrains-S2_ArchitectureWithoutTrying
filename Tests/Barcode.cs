@@ -37,8 +37,6 @@
             return !Equals(left, right);
         }
 
-        public string Value => value;
-
         public override string ToString()
         {
             return value;
