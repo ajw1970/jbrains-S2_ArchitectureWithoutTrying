@@ -78,7 +78,7 @@ namespace Tests
                     else if (barcode == new Barcode("23456"))
                         display.Text = "$12.50";
                     else
-                        display.Text = "Product not found for " + barcode.Value;
+                        display.Text = $"Product not found for {barcode}";
                 }
             }
         }
