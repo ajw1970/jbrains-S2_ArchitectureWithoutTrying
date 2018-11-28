@@ -80,7 +80,7 @@ namespace Tests
                         {new Barcode("23456"), new Price(12.50)}
                     };
 
-                    if (barcode == new Barcode("12345") || barcode == new Barcode("23456"))
+                    if (pricesByBarcode.Contains(barcode))
                         display.Text = pricesByBarcode[barcode].ToString();
                     else
                         display.Text = $"Product not found for {barcode}"; 
