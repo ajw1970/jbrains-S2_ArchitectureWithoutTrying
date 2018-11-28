@@ -73,10 +73,10 @@ namespace Tests
                 }
                 else
                 {
-                    var catalog = new Dictionary<Barcode, string>
+                    var catalog = new Dictionary<Barcode, Price>
                     {
-                        {new Barcode("12345"), "$7.95"}, 
-                        {new Barcode("23456"), "$12.50"}
+                        {new Barcode("12345"), new Price(795)}, 
+                        {new Barcode("23456"), new Price(1250)}
                     };
 
                     if (barcode == new Barcode("12345"))
@@ -85,6 +85,14 @@ namespace Tests
                         display.Text = "$12.50";
                     else
                         display.Text = $"Product not found for {barcode}"; 
+                }
+            }
+
+            public class Price
+            {
+                public Price(int value)
+                {
+                    
                 }
             }
         }
