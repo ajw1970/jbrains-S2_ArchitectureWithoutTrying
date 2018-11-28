@@ -74,7 +74,7 @@ namespace Tests
                 }
                 else
                 {
-                    IDictionary catalog = new Dictionary<Barcode, Price>
+                    IDictionary pricesByBarcode = new Dictionary<Barcode, Price>
                     {
                         {new Barcode("12345"), new Price(795)}, 
                         {new Barcode("23456"), new Price(1250)}
