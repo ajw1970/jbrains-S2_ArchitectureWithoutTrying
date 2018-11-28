@@ -73,12 +73,18 @@ namespace Tests
                 }
                 else
                 {
+                    var catalog = new Dictionary<Barcode, string>
+                    {
+                        {new Barcode("12345"), "$7.95"}, 
+                        {new Barcode("23456"), "$12.50"}
+                    };
+
                     if (barcode == new Barcode("12345"))
                         display.Text = "$7.95";
                     else if (barcode == new Barcode("23456"))
                         display.Text = "$12.50";
                     else
-                        display.Text = $"Product not found for {barcode}";
+                        display.Text = $"Product not found for {barcode}"; 
                 }
             }
         }
