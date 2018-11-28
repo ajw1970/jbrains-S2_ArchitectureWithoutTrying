@@ -17,7 +17,11 @@ namespace Tests
         public void ProductFound()
         {
             var display = new Display();
-            var sale = new Sale(display);
+            var sale = new Sale(display, new Dictionary<Barcode, Sale.Price>
+            {
+                {new Barcode("12345"), new Sale.Price(7.95)}, 
+                {new Barcode("23456"), new Sale.Price(12.50)}
+            });
 
             sale.OnBarcode(new Barcode("12345"));
 
@@ -28,7 +32,11 @@ namespace Tests
         public void AnotherProductFound()
         {
             var display = new Display();
-            var sale = new Sale(display);
+            var sale = new Sale(display, new Dictionary<Barcode, Sale.Price>
+            {
+                {new Barcode("12345"), new Sale.Price(7.95)}, 
+                {new Barcode("23456"), new Sale.Price(12.50)}
+            });
 
             sale.OnBarcode(new Barcode("23456"));
 
@@ -39,7 +47,11 @@ namespace Tests
         public void ProductNotFound()
         {
             Display display = new Display();
-            var sale = new Sale(display);
+            var sale = new Sale(display, new Dictionary<Barcode, Sale.Price>
+            {
+                {new Barcode("12345"), new Sale.Price(7.95)}, 
+                {new Barcode("23456"), new Sale.Price(12.50)}
+            });
 
             sale.OnBarcode(new Barcode("99999"));
 
@@ -50,7 +62,11 @@ namespace Tests
         public void EmptyBarcode()
         {
             Display display = new Display();
-            var sale = new Sale(display);
+            var sale = new Sale(display, new Dictionary<Barcode, Sale.Price>
+            {
+                {new Barcode("12345"), new Sale.Price(7.95)}, 
+                {new Barcode("23456"), new Sale.Price(12.50)}
+            });
 
             sale.OnBarcode(new Barcode(""));
 
@@ -62,14 +78,10 @@ namespace Tests
             private readonly Display display;
             private IDictionary pricesByBarcode;
 
-            public Sale(Display display)
+            public Sale(Display display, IDictionary pricesByBarcode)
             {
                 this.display = display;
-                pricesByBarcode = new Dictionary<Barcode, Price>
-                {
-                    {new Barcode("12345"), new Price(7.95)}, 
-                    {new Barcode("23456"), new Price(12.50)}
-                };
+                this.pricesByBarcode = pricesByBarcode;
             }
 
             public void OnBarcode(Barcode barcode)
