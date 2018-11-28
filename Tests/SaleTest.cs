@@ -62,11 +62,7 @@ namespace Tests
         public void EmptyBarcode()
         {
             Display display = new Display();
-            var sale = new Sale(display, new Dictionary<Barcode, Sale.Price>
-            {
-                {new Barcode("12345"), new Sale.Price(7.95)},
-                {new Barcode("23456"), new Sale.Price(12.50)}
-            });
+            var sale = new Sale(display, new Dictionary<Barcode, Sale.Price>());
 
             sale.OnBarcode(new Barcode(""));
 
