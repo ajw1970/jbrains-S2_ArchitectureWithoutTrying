@@ -60,10 +60,16 @@ namespace Tests
         public class Sale
         {
             private readonly Display display;
+            private IDictionary pricesByBarcode;
 
             public Sale(Display display)
             {
                 this.display = display;
+                pricesByBarcode = new Dictionary<Barcode, Price>
+                {
+                    {new Barcode("12345"), new Price(7.95)}, 
+                    {new Barcode("23456"), new Price(12.50)}
+                };
             }
 
             public void OnBarcode(Barcode barcode)
@@ -74,7 +80,7 @@ namespace Tests
                 }
                 else
                 {
-                    IDictionary pricesByBarcode = new Dictionary<Barcode, Price>
+                    pricesByBarcode = new Dictionary<Barcode, Price>
                     {
                         {new Barcode("12345"), new Price(7.95)}, 
                         {new Barcode("23456"), new Price(12.50)}
@@ -83,7 +89,7 @@ namespace Tests
                     if (pricesByBarcode.Contains(barcode))
                         display.Text = pricesByBarcode[barcode].ToString();
                     else
-                        display.Text = $"Product not found for {barcode}"; 
+                        display.Text = $"Product not found for {barcode}";
                 }
             }
 
