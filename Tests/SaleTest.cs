@@ -80,12 +80,6 @@ namespace Tests
                 }
                 else
                 {
-                    pricesByBarcode = new Dictionary<Barcode, Price>
-                    {
-                        {new Barcode("12345"), new Price(7.95)}, 
-                        {new Barcode("23456"), new Price(12.50)}
-                    };
-
                     if (pricesByBarcode.Contains(barcode))
                         display.Text = pricesByBarcode[barcode].ToString();
                     else
