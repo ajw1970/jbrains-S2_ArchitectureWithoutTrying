@@ -81,7 +81,7 @@ namespace Tests
                     };
 
                     if (barcode == new Barcode("12345"))
-                        display.Text = "$7.95";
+                        display.Text = pricesByBarcode[barcode].ToString();
                     else if (barcode == new Barcode("23456"))
                         display.Text = "$12.50";
                     else
@@ -91,9 +91,17 @@ namespace Tests
 
             public class Price
             {
-                public Price(int value)
+                private readonly int cents;
+
+                public Price(int cents)
                 {
-                    
+                    this.cents = cents;
+                }
+
+                public override string ToString()
+                {
+                    var dollars = cents / 100.0;
+                    return $"{dollars:C}";
                 }
             }
         }
