@@ -76,8 +76,8 @@ namespace Tests
                 {
                     IDictionary pricesByBarcode = new Dictionary<Barcode, Price>
                     {
-                        {new Barcode("12345"), new Price(795)}, 
-                        {new Barcode("23456"), new Price(1250)}
+                        {new Barcode("12345"), new Price(7.95)}, 
+                        {new Barcode("23456"), new Price(12.50)}
                     };
 
                     if (barcode == new Barcode("12345"))
@@ -93,9 +93,9 @@ namespace Tests
             {
                 private readonly int cents;
 
-                public Price(int cents)
+                public Price(double dollars)
                 {
-                    this.cents = cents;
+                    this.cents = (int)(dollars * 100);
                 }
 
                 public override string ToString()
