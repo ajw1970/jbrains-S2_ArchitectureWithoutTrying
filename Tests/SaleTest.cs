@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Dynamic;
@@ -73,7 +74,7 @@ namespace Tests
                 }
                 else
                 {
-                    var catalog = new Dictionary<Barcode, Price>
+                    IDictionary catalog = new Dictionary<Barcode, Price>
                     {
                         {new Barcode("12345"), new Price(795)}, 
                         {new Barcode("23456"), new Price(1250)}
