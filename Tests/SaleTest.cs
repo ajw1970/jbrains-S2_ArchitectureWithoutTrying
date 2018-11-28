@@ -19,7 +19,7 @@ namespace Tests
             var display = new Display();
             var sale = new Sale(display, new Dictionary<Barcode, Sale.Price>
             {
-                {new Barcode("12345"), new Sale.Price(7.95)}, 
+                {new Barcode("12345"), new Sale.Price(7.95)},
                 {new Barcode("23456"), new Sale.Price(12.50)}
             });
 
@@ -34,7 +34,7 @@ namespace Tests
             var display = new Display();
             var sale = new Sale(display, new Dictionary<Barcode, Sale.Price>
             {
-                {new Barcode("12345"), new Sale.Price(7.95)}, 
+                {new Barcode("12345"), new Sale.Price(7.95)},
                 {new Barcode("23456"), new Sale.Price(12.50)}
             });
 
@@ -49,7 +49,7 @@ namespace Tests
             Display display = new Display();
             var sale = new Sale(display, new Dictionary<Barcode, Sale.Price>
             {
-                {new Barcode("12345"), new Sale.Price(7.95)}, 
+                {new Barcode("12345"), new Sale.Price(7.95)},
                 {new Barcode("23456"), new Sale.Price(12.50)}
             });
 
@@ -64,7 +64,7 @@ namespace Tests
             Display display = new Display();
             var sale = new Sale(display, new Dictionary<Barcode, Sale.Price>
             {
-                {new Barcode("12345"), new Sale.Price(7.95)}, 
+                {new Barcode("12345"), new Sale.Price(7.95)},
                 {new Barcode("23456"), new Sale.Price(12.50)}
             });
 
@@ -86,17 +86,17 @@ namespace Tests
 
             public void OnBarcode(Barcode barcode)
             {
+                // SMELL refused bequest. Move up the call stack?
                 if (barcode.Equals(new Barcode("")))
                 {
                     display.Text = "Scanning error: Empty barcode";
+                    return;
                 }
+
+                if (pricesByBarcode.Contains(barcode))
+                    display.Text = pricesByBarcode[barcode].ToString();
                 else
-                {
-                    if (pricesByBarcode.Contains(barcode))
-                        display.Text = pricesByBarcode[barcode].ToString();
-                    else
-                        display.Text = $"Product not found for {barcode}";
-                }
+                    display.Text = $"Product not found for {barcode}";
             }
 
             public class Price
@@ -105,7 +105,7 @@ namespace Tests
 
                 public Price(double dollars)
                 {
-                    cents = (int)(dollars * 100);
+                    cents = (int) (dollars * 100);
                 }
 
                 public override string ToString()
