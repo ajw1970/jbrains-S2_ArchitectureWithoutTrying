@@ -95,7 +95,7 @@ namespace Tests
 
                 public Price(double dollars)
                 {
-                    this.cents = (int)(dollars * 100);
+                    cents = (int)(dollars * 100);
                 }
 
                 public override string ToString()
