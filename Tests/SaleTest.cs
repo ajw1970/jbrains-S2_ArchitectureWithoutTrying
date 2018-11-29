@@ -30,44 +30,26 @@ namespace Tests
         public void ProductFound()
         {
             sale.OnBarcode(new Barcode("12345"));
-
             display.Text.Should().Be("$7.95");
         }
 
         [Fact]
         public void AnotherProductFound()
         {
-            var display = new Display();
-            var sale = new Sale(display, new Dictionary<Barcode, Sale.Price>
-            {
-                {new Barcode("12345"), new Sale.Price(7.95)},
-                {new Barcode("23456"), new Sale.Price(12.50)}
-            });
-
             sale.OnBarcode(new Barcode("23456"));
-
             display.Text.Should().Be("$12.50");
         }
 
         [Fact]
         public void ProductNotFound()
         {
-            Display display = new Display();
-            var sale = new Sale(display, new Dictionary<Barcode, Sale.Price>
-            {
-                {new Barcode("12345"), new Sale.Price(7.95)},
-                {new Barcode("23456"), new Sale.Price(12.50)}
-            });
-
             sale.OnBarcode(new Barcode("99999"));
-
             display.Text.Should().Be("Product not found for 99999");
         }
 
         [Fact]
         public void EmptyBarcode()
         {
-            Display display = new Display();
             var sale = new Sale(display, null);
 
             sale.OnBarcode(new Barcode(""));
