@@ -50,6 +50,7 @@ namespace Tests
         [Fact]
         public void EmptyBarcode()
         {
+            // SMELL another sign of Refused Bequest. This tests is using a different sale from setup. Needs it's own test fixture?
             var sale = new Sale(display, null);
 
             sale.OnBarcode(new Barcode(""));
