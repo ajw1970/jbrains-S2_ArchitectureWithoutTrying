@@ -13,16 +13,22 @@ namespace Tests
 {
     public class SellOneItemTest
     {
-        [Fact]
-        public void ProductFound()
+        private readonly Display display;
+        private readonly Sale sale;
+
+        public SellOneItemTest()
         {
-            var display = new Display();
-            var sale = new Sale(display, new Dictionary<Barcode, Sale.Price>
+            display = new Display();
+            sale = new Sale(display, new Dictionary<Barcode, Sale.Price>
             {
                 {new Barcode("12345"), new Sale.Price(7.95)},
                 {new Barcode("23456"), new Sale.Price(12.50)}
             });
+        }
 
+        [Fact]
+        public void ProductFound()
+        {
             sale.OnBarcode(new Barcode("12345"));
 
             display.Text.Should().Be("$7.95");
