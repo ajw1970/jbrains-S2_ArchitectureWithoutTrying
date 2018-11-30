@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using Xunit;
 using FluentAssertions;
@@ -12,7 +13,96 @@ namespace PointOfSaleTests
         [Fact]
         public void ProductFound()
         {
-            true.Should().BeTrue();
+            var irrelevantPrice = Price.Cents(795);
+            var catalogStub = new CatalogStub(knownBarcode: "12345", knownPrice: irrelevantPrice);
+            var displaySpy = new DisplaySpy();
+            var saleController = new SaleController(catalogStub, displaySpy);
+            
+            saleController.OnBarcode("12345");
+            
+            DisplaySpy.DisplayPriceCalledWith.Should().Be(irrelevantPrice);
+        }
+
+        public class Price
+        {
+            public static Price Cents(int centsValue)
+            {
+                return new Price();
+            }
+
+            public override string ToString()
+            {
+                return "a Price";
+            }
+        }
+
+        public interface ICatalog
+        {
+            Price FindPrice(string barcode);
+        }
+
+        public class CatalogStub : ICatalog
+        {
+            private readonly PricedBarcode knownBarcode;
+
+            public CatalogStub(string knownBarcode, Price knownPrice)
+            {
+                this.knownBarcode = new PricedBarcode(knownBarcode, knownPrice);
+            }
+
+            public Price FindPrice(string barcode)
+            {
+                if (knownBarcode.Barcode == barcode)
+                    return knownBarcode.Price;
+                else
+                {
+                    return null;
+                }
+            }
+            
+            private class PricedBarcode
+            {
+                public string Barcode { get; }
+                public Price Price { get; }
+
+                public PricedBarcode(string barcode, Price price)
+                {
+                    Barcode = barcode;
+                    Price = price;
+                }
+            }
+        }
+
+        public interface IDisplay
+        {
+            void DisplayPrice(Price price);
+        }
+
+        public class DisplaySpy : IDisplay
+        {
+            public void DisplayPrice(Price price)
+            {
+                DisplayPriceCalledWith = price;
+            }
+
+            public static Price DisplayPriceCalledWith { get; private set; }
+        }
+
+        public class SaleController
+        {
+            private readonly ICatalog catalog;
+            private readonly IDisplay display;
+
+            public SaleController(ICatalog catalog, IDisplay display)
+            {
+                this.catalog = catalog;
+                this.display = display;
+            }
+
+            public void OnBarcode(string barcode)
+            {
+                display.DisplayPrice(catalog.FindPrice(barcode));
+            }
         }
     }
 }
