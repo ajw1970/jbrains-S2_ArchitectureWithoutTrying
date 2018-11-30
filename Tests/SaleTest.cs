@@ -86,16 +86,15 @@ namespace Tests
 
             public class Price
             {
-                private readonly int cents;
+                private readonly decimal dollars;
 
                 public Price(double dollars)
                 {
-                    cents = (int) (dollars * 100);
+                    this.dollars = (decimal)dollars;
                 }
 
                 public override string ToString()
                 {
-                    var dollars = cents / 100.0;
                     return $"{dollars:C}";
                 }
             }
