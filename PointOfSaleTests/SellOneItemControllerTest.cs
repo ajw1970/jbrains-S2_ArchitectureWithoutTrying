@@ -7,12 +7,12 @@ using FluentAssertions;
 
 namespace PointOfSaleTests
 {
-    public class Class1
+    public class SellOneItemControllerTest
     {
         [Fact]
-        public void Nothing()
+        public void ProductFound()
         {
-
+            true.Should().BeTrue();
         }
     }
 }
