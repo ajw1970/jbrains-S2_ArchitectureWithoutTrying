@@ -10,12 +10,18 @@ namespace PointOfSaleTests
 {
     public class SellOneItemControllerTest
     {
+        private readonly DisplaySpy displaySpy;
+
+        public SellOneItemControllerTest()
+        {
+            displaySpy = new DisplaySpy();
+        }
+
         [Fact]
         public void ProductFound()
         {
             var irrelevantPrice = Price.Cents(795);
             var catalogStub = new CatalogStub(knownBarcode: "::product found::", knownPrice: irrelevantPrice);
-            var displaySpy = new DisplaySpy();
             var saleController = new SaleController(catalogStub, displaySpy);
 
             saleController.OnBarcode("::product found::");
@@ -27,7 +33,6 @@ namespace PointOfSaleTests
         public void ProductNotFound()
         {
             var productNeverFoundCatalog = new CatalogDummy();
-            var displaySpy = new DisplaySpy();
             var saleController = new SaleController(productNeverFoundCatalog, displaySpy);
 
             saleController.OnBarcode("::product not found::");
@@ -38,7 +43,6 @@ namespace PointOfSaleTests
         [Fact]
         public void EmptyBarcode()
         {
-            var displaySpy = new DisplaySpy();
             var saleController = new SaleController(null, displaySpy);
             
             saleController.OnBarcode("");
