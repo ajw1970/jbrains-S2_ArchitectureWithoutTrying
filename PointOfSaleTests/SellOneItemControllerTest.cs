@@ -17,10 +17,30 @@ namespace PointOfSaleTests
             var catalogStub = new CatalogStub(knownBarcode: "12345", knownPrice: irrelevantPrice);
             var displaySpy = new DisplaySpy();
             var saleController = new SaleController(catalogStub, displaySpy);
-            
+
             saleController.OnBarcode("12345");
-            
+
             DisplaySpy.DisplayPriceCalledWith.Should().Be(irrelevantPrice);
+        }
+
+        [Fact]
+        public void ProductNotFound()
+        {
+            var productNeverFoundCatalog = new CatalogDummy();
+            var displaySpy = new DisplaySpy();
+            var saleController = new SaleController(productNeverFoundCatalog, displaySpy);
+
+            saleController.OnBarcode("::product not found::");
+
+            DisplaySpy.DisplayProductNotFoundCalledWith.Should().Contain("::product not found::");
+        }
+
+        public class CatalogDummy : ICatalog
+        {
+            public Price FindPrice(string barcode)
+            {
+                return null;
+            }
         }
 
         public class Price
@@ -59,7 +79,7 @@ namespace PointOfSaleTests
                     return null;
                 }
             }
-            
+
             private class PricedBarcode
             {
                 public string Barcode { get; }
@@ -76,6 +96,7 @@ namespace PointOfSaleTests
         public interface IDisplay
         {
             void DisplayPrice(Price price);
+            void DisplayProductNotFound(string barcode);
         }
 
         public class DisplaySpy : IDisplay
@@ -85,7 +106,13 @@ namespace PointOfSaleTests
                 DisplayPriceCalledWith = price;
             }
 
+            void IDisplay.DisplayProductNotFound(string barcode)
+            {
+                DisplayProductNotFoundCalledWith = barcode;
+            }
+
             public static Price DisplayPriceCalledWith { get; private set; }
+            public static string DisplayProductNotFoundCalledWith { get; private set; }
         }
 
         public class SaleController
@@ -101,7 +128,11 @@ namespace PointOfSaleTests
 
             public void OnBarcode(string barcode)
             {
-                display.DisplayPrice(catalog.FindPrice(barcode));
+                var price = catalog.FindPrice(barcode);
+                if (price == null)
+                    display.DisplayProductNotFound(barcode);
+                else
+                    display.DisplayPrice(price);
             }
         }
     }
