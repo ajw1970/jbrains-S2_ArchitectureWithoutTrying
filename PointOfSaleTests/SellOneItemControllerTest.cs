@@ -14,11 +14,11 @@ namespace PointOfSaleTests
         public void ProductFound()
         {
             var irrelevantPrice = Price.Cents(795);
-            var catalogStub = new CatalogStub(knownBarcode: "12345", knownPrice: irrelevantPrice);
+            var catalogStub = new CatalogStub(knownBarcode: "::product found::", knownPrice: irrelevantPrice);
             var displaySpy = new DisplaySpy();
             var saleController = new SaleController(catalogStub, displaySpy);
 
-            saleController.OnBarcode("12345");
+            saleController.OnBarcode("::product found::");
 
             DisplaySpy.DisplayPriceCalledWith.Should().Be(irrelevantPrice);
         }
