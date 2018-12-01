@@ -35,6 +35,17 @@ namespace PointOfSaleTests
             DisplaySpy.DisplayProductNotFoundCalledWith.Should().Contain("::product not found::");
         }
 
+        [Fact]
+        public void EmptyBarcode()
+        {
+            var displaySpy = new DisplaySpy();
+            var saleController = new SaleController(null, displaySpy);
+            
+            saleController.OnBarcode("");
+            
+            DisplaySpy.DisplayEmptyBarcodeCalled.Should().BeTrue();
+        }
+        
         public class CatalogDummy : ICatalog
         {
             public Price FindPrice(string barcode)
@@ -97,6 +108,7 @@ namespace PointOfSaleTests
         {
             void DisplayPrice(Price price);
             void DisplayProductNotFound(string barcode);
+            void DisplayEmptyBarcodeMessage();
         }
 
         public class DisplaySpy : IDisplay
@@ -111,8 +123,14 @@ namespace PointOfSaleTests
                 DisplayProductNotFoundCalledWith = barcode;
             }
 
+            public void DisplayEmptyBarcodeMessage()
+            {
+                DisplayEmptyBarcodeCalled = true;
+            }
+
             public static Price DisplayPriceCalledWith { get; private set; }
             public static string DisplayProductNotFoundCalledWith { get; private set; }
+            public static bool DisplayEmptyBarcodeCalled { get; private set; }
         }
 
         public class SaleController
@@ -128,6 +146,12 @@ namespace PointOfSaleTests
 
             public void OnBarcode(string barcode)
             {
+                if ("".Equals(barcode))
+                {
+                    display.DisplayEmptyBarcodeMessage();
+                    return;
+                }
+                
                 var price = catalog.FindPrice(barcode);
                 if (price == null)
                     display.DisplayProductNotFound(barcode);
