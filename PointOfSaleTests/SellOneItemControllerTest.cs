@@ -5,6 +5,7 @@ using System.Security.AccessControl;
 using System.Text;
 using Xunit;
 using FluentAssertions;
+using NSubstitute;
 
 namespace PointOfSaleTests
 {
@@ -27,6 +28,13 @@ namespace PointOfSaleTests
             saleController.OnBarcode("::product found::");
 
             DisplaySpy.DisplayPriceCalledWith.Should().Be(irrelevantPrice);
+            
+            var display = Substitute.For<IDisplay>();
+            saleController = new SaleController(catalogStub, display);
+            
+            saleController.OnBarcode("::product found::");
+            
+            display.Received().DisplayPrice(irrelevantPrice);
         }
 
         [Fact]
