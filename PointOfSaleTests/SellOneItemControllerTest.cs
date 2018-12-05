@@ -22,18 +22,12 @@ namespace PointOfSaleTests
         public void ProductFound()
         {
             var irrelevantPrice = Price.Cents(795);
-            var catalogStub = new CatalogStub(knownBarcode: "::product found::", knownPrice: irrelevantPrice);
-            var saleController = new SaleController(catalogStub, displaySpy);
-
-            saleController.OnBarcode("::product found::");
-
-            DisplaySpy.DisplayPriceCalledWith.Should().Be(irrelevantPrice);
-            
             var display = Substitute.For<IDisplay>();
-            saleController = new SaleController(catalogStub, display);
-            
+            var catalogStub = new CatalogStub(knownBarcode: "::product found::", knownPrice: irrelevantPrice);
+            var saleController = new SaleController(catalogStub, display);
+
             saleController.OnBarcode("::product found::");
-            
+
             display.Received().DisplayPrice(irrelevantPrice);
         }
 
