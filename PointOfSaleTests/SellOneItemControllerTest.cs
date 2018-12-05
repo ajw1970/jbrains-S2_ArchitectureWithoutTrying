@@ -29,6 +29,15 @@ namespace PointOfSaleTests
             saleController.OnBarcode("::product found::");
 
             display.Received().DisplayPrice(irrelevantPrice);
+
+            display = Substitute.For<IDisplay>();
+            var catalog = Substitute.For<ICatalog>();
+            catalog.FindPrice("::product found::").Returns(irrelevantPrice);
+            saleController = new SaleController(catalog, display);
+
+            saleController.OnBarcode("::product found::");
+
+            display.Received().DisplayPrice(irrelevantPrice);
         }
 
         [Fact]
