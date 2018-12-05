@@ -37,13 +37,7 @@ namespace PointOfSaleTests
         public void ProductNotFound()
         {
             var productNeverFoundCatalog = new CatalogDummy();
-            var saleController = new SaleController(productNeverFoundCatalog, displaySpy);
-
-            saleController.OnBarcode("::product not found::");
-
-            DisplaySpy.DisplayProductNotFoundCalledWith.Should().Contain("::product not found::");
-            
-            saleController = new SaleController(productNeverFoundCatalog, display);
+            var saleController = new SaleController(productNeverFoundCatalog, display);
 
             saleController.OnBarcode("::product not found::");
             
