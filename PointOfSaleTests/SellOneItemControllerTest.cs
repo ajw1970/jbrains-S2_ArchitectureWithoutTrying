@@ -42,6 +42,12 @@ namespace PointOfSaleTests
             saleController.OnBarcode("::product not found::");
 
             DisplaySpy.DisplayProductNotFoundCalledWith.Should().Contain("::product not found::");
+            
+            saleController = new SaleController(productNeverFoundCatalog, display);
+
+            saleController.OnBarcode("::product not found::");
+            
+            display.Received().DisplayProductNotFound(Arg.Is<string>(a => a.Contains("::product not found::")));
         }
 
         [Fact]
