@@ -12,17 +12,18 @@ namespace PointOfSaleTests
     public class SellOneItemControllerTest
     {
         private readonly DisplaySpy displaySpy;
+        private readonly IDisplay display;
 
         public SellOneItemControllerTest()
         {
             displaySpy = new DisplaySpy();
+            display = Substitute.For<IDisplay>();
         }
 
         [Fact]
         public void ProductFound()
         {
             var irrelevantPrice = Price.Cents(795);
-            var display = Substitute.For<IDisplay>();
             var catalog = Substitute.For<ICatalog>();
             catalog.FindPrice("::product found::").Returns(irrelevantPrice);
             var saleController = new SaleController(catalog, display);
