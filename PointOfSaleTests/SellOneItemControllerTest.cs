@@ -52,6 +52,12 @@ namespace PointOfSaleTests
             saleController.OnBarcode("");
             
             DisplaySpy.DisplayEmptyBarcodeCalled.Should().BeTrue();
+            
+            saleController = new SaleController(null, display);
+            
+            saleController.OnBarcode("");
+            
+            display.Received().DisplayEmptyBarcodeMessage();
         }
         
         public class CatalogDummy : ICatalog
