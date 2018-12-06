@@ -117,28 +117,6 @@ namespace PointOfSaleTests
             void DisplayEmptyBarcodeMessage();
         }
 
-        public class DisplaySpy : IDisplay
-        {
-            public void DisplayPrice(Price price)
-            {
-                DisplayPriceCalledWith = price;
-            }
-
-            void IDisplay.DisplayProductNotFound(string barcode)
-            {
-                DisplayProductNotFoundCalledWith = barcode;
-            }
-
-            public void DisplayEmptyBarcodeMessage()
-            {
-                DisplayEmptyBarcodeCalled = true;
-            }
-
-            public static Price DisplayPriceCalledWith { get; private set; }
-            public static string DisplayProductNotFoundCalledWith { get; private set; }
-            public static bool DisplayEmptyBarcodeCalled { get; private set; }
-        }
-
         public class SaleController
         {
             private readonly ICatalog catalog;
