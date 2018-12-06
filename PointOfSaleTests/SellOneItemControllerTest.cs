@@ -78,38 +78,6 @@ namespace PointOfSaleTests
             Price FindPrice(string barcode);
         }
 
-        public class CatalogStub : ICatalog
-        {
-            private readonly PricedBarcode knownBarcode;
-
-            public CatalogStub(string knownBarcode, Price knownPrice)
-            {
-                this.knownBarcode = new PricedBarcode(knownBarcode, knownPrice);
-            }
-
-            public Price FindPrice(string barcode)
-            {
-                if (knownBarcode.Barcode == barcode)
-                    return knownBarcode.Price;
-                else
-                {
-                    return null;
-                }
-            }
-
-            private class PricedBarcode
-            {
-                public string Barcode { get; }
-                public Price Price { get; }
-
-                public PricedBarcode(string barcode, Price price)
-                {
-                    Barcode = barcode;
-                    Price = price;
-                }
-            }
-        }
-
         public interface IDisplay
         {
             void DisplayPrice(Price price);
