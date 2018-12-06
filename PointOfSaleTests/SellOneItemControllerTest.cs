@@ -6,6 +6,9 @@ using System.Text;
 using Xunit;
 using FluentAssertions;
 using NSubstitute;
+using NSubstitute.Core.Arguments;
+using NSubstitute.Extensions;
+using NSubstitute.ReturnsExtensions;
 
 namespace PointOfSaleTests
 {
@@ -34,7 +37,8 @@ namespace PointOfSaleTests
         [Fact]
         public void ProductNotFound()
         {
-            var productNeverFoundCatalog = new CatalogDummy();
+            var productNeverFoundCatalog = Substitute.For<ICatalog>();
+            productNeverFoundCatalog.FindPrice("::any product::").ReturnsNullForAnyArgs();
             var saleController = new SaleController(productNeverFoundCatalog, display);
 
             saleController.OnBarcode("::product not found::");
