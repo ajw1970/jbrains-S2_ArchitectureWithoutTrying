@@ -47,13 +47,7 @@ namespace PointOfSaleTests
         [Fact]
         public void EmptyBarcode()
         {
-            var saleController = new SaleController(null, displaySpy);
-            
-            saleController.OnBarcode("");
-            
-            DisplaySpy.DisplayEmptyBarcodeCalled.Should().BeTrue();
-            
-            saleController = new SaleController(null, display);
+            var saleController = new SaleController(null, display);
             
             saleController.OnBarcode("");
             
