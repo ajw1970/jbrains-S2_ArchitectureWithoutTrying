@@ -55,14 +55,6 @@ namespace PointOfSaleTests
             
             display.Received().DisplayEmptyBarcodeMessage();
         }
-        
-        public class CatalogDummy : ICatalog
-        {
-            public Price FindPrice(string barcode)
-            {
-                return null;
-            }
-        }
 
         public class Price
         {
