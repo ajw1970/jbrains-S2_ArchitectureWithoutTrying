@@ -11,12 +11,10 @@ namespace PointOfSaleTests
 {
     public class SellOneItemControllerTest
     {
-        private readonly DisplaySpy displaySpy;
         private readonly IDisplay display;
 
         public SellOneItemControllerTest()
         {
-            displaySpy = new DisplaySpy();
             display = Substitute.For<IDisplay>();
         }
 
