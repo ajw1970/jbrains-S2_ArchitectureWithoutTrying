@@ -1,13 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.AccessControl;
-using System.Text;
-using Xunit;
-using FluentAssertions;
+﻿using Xunit;
 using NSubstitute;
-using NSubstitute.Core.Arguments;
-using NSubstitute.Extensions;
 using NSubstitute.ReturnsExtensions;
 
 namespace PointOfSaleTests
