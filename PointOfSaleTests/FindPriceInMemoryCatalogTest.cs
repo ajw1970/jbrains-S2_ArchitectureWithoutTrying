@@ -21,7 +21,7 @@ namespace PointOfSaleTests
             catalog.FindPrice("::not found::").Should().Be(null);
         }
 
-        public class InMemoryCatalog : ICatalog
+        public class InMemoryCatalog
         {
             private readonly Dictionary<string, Price> pricesByBarcode;
 
