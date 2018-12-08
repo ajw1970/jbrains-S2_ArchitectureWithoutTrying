@@ -48,24 +48,6 @@ namespace PointOfSaleTests
             display.Received().DisplayEmptyBarcodeMessage();
         }
 
-        public class Price
-        {
-            public static Price Cents(int centsValue)
-            {
-                return new Price();
-            }
-
-            public override string ToString()
-            {
-                return "a Price";
-            }
-        }
-
-        public interface ICatalog
-        {
-            Price FindPrice(string barcode);
-        }
-
         public interface IDisplay
         {
             void DisplayPrice(Price price);
@@ -98,6 +80,24 @@ namespace PointOfSaleTests
                 else
                     display.DisplayPrice(price);
             }
+        }
+    }
+
+    public interface ICatalog
+    {
+        Price FindPrice(string barcode);
+    }
+
+    public class Price
+    {
+        public static Price Cents(int centsValue)
+        {
+            return new Price();
+        }
+
+        public override string ToString()
+        {
+            return "a Price";
         }
     }
 }
