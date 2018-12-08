@@ -14,6 +14,13 @@ namespace PointOfSaleTests
             catalog.FindPrice("12345").Should().Be(foundPrice);
         }
 
+        [Fact]
+        public void ProductNotFound()
+        {
+            var catalog = new InMemoryCatalog(new Dictionary<string, Price>());
+            catalog.FindPrice("::not found::").Should().Be(null);
+        }
+
         public class InMemoryCatalog : ICatalog
         {
             private readonly Dictionary<string, Price> pricesByBarcode;
@@ -25,7 +32,7 @@ namespace PointOfSaleTests
 
             public Price FindPrice(string barcode)
             {
-                return pricesByBarcode[barcode];
+                return pricesByBarcode.ContainsKey(barcode) ? pricesByBarcode[barcode] : null;
             }
         }
     }
