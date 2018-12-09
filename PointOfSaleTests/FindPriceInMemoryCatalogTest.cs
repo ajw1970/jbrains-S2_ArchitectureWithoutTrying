@@ -28,7 +28,10 @@ namespace PointOfSaleTests
         
         private static ICatalog CatalogWithout(string barcodeToAvoid)
         {
-            return new InMemoryCatalog(new Dictionary<string, Price>());
+            return new InMemoryCatalog(new Dictionary<string, Price>
+            {
+                {"Anything but " + barcodeToAvoid, Price.Cents(0)}
+            });
         }
 
 
