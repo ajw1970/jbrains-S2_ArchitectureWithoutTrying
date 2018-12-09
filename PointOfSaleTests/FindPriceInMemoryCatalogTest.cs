@@ -10,16 +10,27 @@ namespace PointOfSaleTests
         public void ProductFound()
         {
             var foundPrice = Price.Cents(1250);
-            var catalog = new InMemoryCatalog(new Dictionary<string, Price> { {"12345", foundPrice} });
+            var catalog = CatalogWith("12345", foundPrice);
             catalog.FindPrice("12345").Should().Be(foundPrice);
+        }
+
+        private static ICatalog CatalogWith(string barcode, Price price)
+        {
+            return new InMemoryCatalog(new Dictionary<string, Price> { {barcode, price} });
         }
 
         [Fact]
         public void ProductNotFound()
         {
-            var catalog = new InMemoryCatalog(new Dictionary<string, Price>());
-            catalog.FindPrice("::not found::").Should().Be(null);
+            var catalog = CatalogWithout("12345");
+            catalog.FindPrice("12345").Should().Be(null);
         }
+        
+        private static ICatalog CatalogWithout(string barcodeToAvoid)
+        {
+            return new InMemoryCatalog(new Dictionary<string, Price>());
+        }
+
 
         public class InMemoryCatalog : ICatalog
         {
