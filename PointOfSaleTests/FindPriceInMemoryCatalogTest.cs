@@ -6,7 +6,12 @@ namespace PointOfSaleTests
     {
         protected override ICatalog CatalogWith(string barcode, Price price)
         {
-            return new InMemoryCatalog(new Dictionary<string, Price> { {barcode, price} });
+            return new InMemoryCatalog(new Dictionary<string, Price>
+            {
+                {"Definitely not " + barcode, Price.Cents(0)},
+                {barcode, price},
+                {"Once again, Definitely not " + barcode, Price.Cents(1_000_000_00)}
+            });
         }
 
         protected override ICatalog CatalogWithout(string barcodeToAvoid)
