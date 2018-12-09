@@ -74,6 +74,8 @@
   <ItemGroup>
     <Compile Include="FindPriceInCatalogContract.cs" />
     <Compile Include="FindPriceInMemoryCatalogTest.cs" />
+    <Compile Include="ICatalog.cs" />
+    <Compile Include="Price.cs" />
     <Compile Include="SellOneItemControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
