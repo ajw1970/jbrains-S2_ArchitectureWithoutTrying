@@ -1,39 +1,21 @@
 using System.Collections.Generic;
-using FluentAssertions;
-using Xunit;
 
 namespace PointOfSaleTests
 {
-    public class FindPriceInMemoryCatalogTest
+    public class FindPriceInMemoryFindPriceInCatalogTest : FindPriceInCatalogContract
     {
-        [Fact]
-        public void ProductFound()
-        {
-            var foundPrice = Price.Cents(1250);
-            var catalog = CatalogWith("12345", foundPrice);
-            catalog.FindPrice("12345").Should().Be(foundPrice);
-        }
-
-        private static ICatalog CatalogWith(string barcode, Price price)
+        protected override ICatalog CatalogWith(string barcode, Price price)
         {
             return new InMemoryCatalog(new Dictionary<string, Price> { {barcode, price} });
         }
 
-        [Fact]
-        public void ProductNotFound()
-        {
-            var catalog = CatalogWithout("12345");
-            catalog.FindPrice("12345").Should().Be(null);
-        }
-        
-        private static ICatalog CatalogWithout(string barcodeToAvoid)
+        protected override ICatalog CatalogWithout(string barcodeToAvoid)
         {
             return new InMemoryCatalog(new Dictionary<string, Price>
             {
                 {"Anything but " + barcodeToAvoid, Price.Cents(0)}
             });
         }
-
 
         public class InMemoryCatalog : ICatalog
         {
