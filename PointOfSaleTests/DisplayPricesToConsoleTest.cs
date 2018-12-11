@@ -16,13 +16,12 @@ namespace PointOfSaleTests
         [InlineData(210832281, "$2,108,322.81")]
         public void Test(int priceInCents, string expectedFormattedPrice)
         {
-            Format(priceInCents).Should().Be(expectedFormattedPrice);
+            Format(Price.Cents(priceInCents)).Should().Be(expectedFormattedPrice);
         }
 
-        private static string Format(int princeInCents)
+        private static string Format(Price cents)
         {
-            decimal priceInDollars = princeInCents / 100m;
-            return $"{priceInDollars:C}";
+            return $"{cents.DollarValue():C}";
         }
     }
 }
